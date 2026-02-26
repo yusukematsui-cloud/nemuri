@@ -11,18 +11,39 @@ export const client = createClient({
 export type ArticleType = "standard" | "ranking" | "experience" | "column";
 export type Category = "cause" | "treatment" | "goods" | "experience" | "column";
 
+export const categoryLabelMap: Record<Category, string> = {
+  cause: "いびきの原因",
+  treatment: "対策・治療",
+  goods: "グッズ・レビュー",
+  experience: "体験談",
+  column: "専門家コラム",
+};
+
 export type Article = {
   title: string;
   description: string;
-  category: Category;
+  category: string[];
   categoryLabel: string;
-  type: ArticleType;
+  type: string[];
   readTime: string;
   author?: string;
   authorRole?: string;
-  image: MicroCMSImage;
-  body: string; // rich editor HTML
+  image?: MicroCMSImage;
+  body: string;
 } & MicroCMSListContent;
+
+// Helpers
+export function getArticleType(article: Article): ArticleType {
+  return (article.type?.[0] as ArticleType) || "standard";
+}
+
+export function getArticleCategory(article: Article): Category {
+  // Try to find category from categoryLabel
+  for (const [key, label] of Object.entries(categoryLabelMap)) {
+    if (article.categoryLabel === label) return key as Category;
+  }
+  return "cause";
+}
 
 // Fetch functions
 export async function getArticles(limit = 20, offset = 0) {
@@ -43,23 +64,23 @@ export async function getArticleBySlug(contentId: string) {
   });
 }
 
-export async function getArticlesByCategory(category: Category, limit = 20) {
+export async function getArticlesByCategory(categoryLabel: string, limit = 20) {
   return client.getList<Article>({
     endpoint: "articles",
     queries: {
       limit,
-      filters: `category[equals]${category}`,
+      filters: `categoryLabel[equals]${categoryLabel}`,
       orders: "-publishedAt",
     },
   });
 }
 
-export async function getArticlesByType(type: ArticleType, limit = 5) {
+export async function getArticlesByType(type: string, limit = 5) {
   return client.getList<Article>({
     endpoint: "articles",
     queries: {
       limit,
-      filters: `type[equals]${type}`,
+      filters: `type[contains]${type}`,
       orders: "-publishedAt",
     },
   });

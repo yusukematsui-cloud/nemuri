@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { getArticles, getArticlesByCategory } from "@/lib/microcms";
-import type { Category } from "@/lib/microcms";
 import { ArticleCard } from "@/components/shared/ArticleCard";
 import { AppCTA } from "@/components/shared/AppCTA";
 
@@ -55,7 +54,7 @@ export default async function CategoryPage({
   const res =
     name === "all"
       ? await getArticles(50)
-      : await getArticlesByCategory(name as Category, 50);
+      : await getArticlesByCategory(meta.label, 50);
 
   const articles = res.contents;
 

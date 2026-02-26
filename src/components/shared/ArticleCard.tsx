@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import type { Article } from "@/lib/microcms";
+import { getArticleCategory } from "@/lib/microcms";
 
 function formatDate(dateStr: string) {
   const d = new Date(dateStr);

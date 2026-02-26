@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getArticleBySlug, getArticles } from "@/lib/microcms";
+import { getArticleBySlug, getArticles, getArticleCategory } from "@/lib/microcms";
 import { AppCTA } from "@/components/shared/AppCTA";
 
 function formatDate(dateStr: string) {
@@ -44,7 +44,7 @@ export default async function ArticlePage({
         <p className="text-xs text-text-muted">
           <Link href="/" className="text-accent-blue hover:underline">ホーム</Link>
           {" / "}
-          <Link href={`/category/${article.category}`} className="text-accent-blue hover:underline">
+          <Link href={`/category/${getArticleCategory(article)}`} className="text-accent-blue hover:underline">
             {article.categoryLabel}
           </Link>
           {" / "}
