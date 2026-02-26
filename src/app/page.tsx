@@ -20,17 +20,25 @@ const categories = [
 export const revalidate = 60; // ISR: 60秒ごとに再生成
 
 export default async function HomePage() {
-  const [allRes, columnRes] = await Promise.all([
-    getArticles(10),
-    getArticlesByType("column", 3),
-  ]);
+  let all: Article[] = [];
+  let columns: Article[] = [];
+  let fetchError: string | null = null;
 
-  const all = allRes.contents;
+  try {
+    const [allRes, columnRes] = await Promise.all([
+      getArticles(10),
+      getArticlesByType("column", 3),
+    ]);
+    all = allRes.contents;
+    columns = columnRes.contents;
+  } catch (e: unknown) {
+    fetchError = e instanceof Error ? e.message : String(e);
+  }
+
   const featured = all[0] as Article | undefined;
   const sideArticles = all.slice(1, 4);
   const latest = all.slice(0, 6);
   const popular = all.slice(0, 5);
-  const columns = columnRes.contents;
 
   if (!featured) {
     return (
@@ -41,6 +49,14 @@ export default async function HomePage() {
         <p className="text-text-secondary mb-6">
           記事がまだ公開されていません。microCMS から記事を追加してください。
         </p>
+        {fetchError && (
+          <p className="text-red-500 text-xs mb-4">Error: {fetchError}</p>
+        )}
+        {!fetchError && (
+          <p className="text-text-muted text-xs mb-4">
+            ENV: domain={process.env.MICROCMS_SERVICE_DOMAIN ? "set" : "missing"}, key={process.env.MICROCMS_API_KEY ? "set" : "missing"}
+          </p>
+        )}
         <a
           href="https://nemuri.microcms.io"
           target="_blank"
