@@ -7,6 +7,57 @@ import { AppCTA } from "@/components/shared/AppCTA";
 
 const BASE = "https://nemuri.vercel.app";
 
+function ArticleBody({ body, articleId }: { body: string; articleId: string }) {
+  // Split body at <h2> boundaries to insert images between sections
+  const sections = body.split(/(?=<h2[\s>])/);
+  const totalH2 = sections.length;
+
+  // Insert image after ~1/3 and ~2/3 of sections
+  const img1After = Math.max(1, Math.floor(totalH2 / 3));
+  const img2After = Math.max(2, Math.floor((totalH2 * 2) / 3));
+
+  const result: React.ReactNode[] = [];
+
+  sections.forEach((section, i) => {
+    result.push(
+      <div
+        key={`s${i}`}
+        className="article-body"
+        dangerouslySetInnerHTML={{ __html: section }}
+      />
+    );
+
+    if (i === img1After) {
+      result.push(
+        <figure key="img1" className="my-8">
+          <Image
+            src={`/images/articles/${articleId}-1.png`}
+            alt=""
+            width={760}
+            height={428}
+            className="w-full rounded-[4px]"
+          />
+        </figure>
+      );
+    }
+    if (i === img2After) {
+      result.push(
+        <figure key="img2" className="my-8">
+          <Image
+            src={`/images/articles/${articleId}-2.png`}
+            alt=""
+            width={760}
+            height={428}
+            className="w-full rounded-[4px]"
+          />
+        </figure>
+      );
+    }
+  });
+
+  return <>{result}</>;
+}
+
 function formatDate(dateStr: string) {
   const d = new Date(dateStr);
   return `${d.getFullYear()}.${String(d.getMonth() + 1).padStart(2, "0")}.${String(d.getDate()).padStart(2, "0")}`;
@@ -177,11 +228,8 @@ export default async function ArticlePage({
             {article.description}
           </p>
 
-          {/* Rich Editor Content */}
-          <div
-            className="article-body"
-            dangerouslySetInnerHTML={{ __html: article.body }}
-          />
+          {/* Rich Editor Content with inline images */}
+          <ArticleBody body={article.body} articleId={article.id} />
         </div>
 
         {/* Sidebar */}
