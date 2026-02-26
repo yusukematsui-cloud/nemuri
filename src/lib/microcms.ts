@@ -32,6 +32,12 @@ export type Article = {
   body: string;
 } & MicroCMSListContent;
 
+// Image helper — prefer local images, then microCMS, then fallback
+export function getArticleImage(article: Article, size: "hero" | "card" = "card"): string {
+  if (article.image?.url) return article.image.url;
+  return `/images/articles/${article.id}.png`;
+}
+
 // Helpers
 export function getArticleType(article: Article): ArticleType {
   return (article.type?.[0] as ArticleType) || "standard";

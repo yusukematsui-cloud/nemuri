@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getArticleBySlug, getArticles, getArticleCategory } from "@/lib/microcms";
+import { getArticleBySlug, getArticles, getArticleCategory, getArticleImage } from "@/lib/microcms";
 import { AppCTA } from "@/components/shared/AppCTA";
 
 function formatDate(dateStr: string) {
@@ -30,7 +30,7 @@ export default async function ArticlePage({
     notFound();
   }
 
-  const imageUrl = article.image?.url || "https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?w=1200&h=600&fit=crop";
+  const imageUrl = getArticleImage(article, "hero");
   const date = formatDate(article.publishedAt || article.createdAt);
 
   // Fetch related articles
@@ -131,15 +131,13 @@ export default async function ArticlePage({
                 {related.map((rel) => (
                   <Link key={rel.id} href={`/articles/${rel.id}`} className="group flex gap-3">
                     <div className="relative w-[72px] h-[52px] rounded-[3px] overflow-hidden shrink-0 bg-border-light">
-                      {rel.image?.url && (
-                        <Image
-                          src={rel.image.url}
-                          alt={rel.title}
-                          fill
-                          className="object-cover"
-                          sizes="72px"
-                        />
-                      )}
+                      <Image
+                        src={getArticleImage(rel)}
+                        alt={rel.title}
+                        fill
+                        className="object-cover"
+                        sizes="72px"
+                      />
                     </div>
                     <div>
                       <p className="text-[13px] font-medium text-text-primary leading-[1.5] group-hover:text-accent-blue transition-colors">

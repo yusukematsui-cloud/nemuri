@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import type { Article } from "@/lib/microcms";
-import { getArticleCategory } from "@/lib/microcms";
+import { getArticleImage } from "@/lib/microcms";
 
 function formatDate(dateStr: string) {
   const d = new Date(dateStr);
@@ -9,7 +9,7 @@ function formatDate(dateStr: string) {
 }
 
 export function ArticleCard({ article }: { article: Article }) {
-  const imageUrl = article.image?.url || "https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?w=600&h=400&fit=crop";
+  const imageUrl = getArticleImage(article);
 
   return (
     <Link href={`/articles/${article.id}`} className="group flex-1 min-w-0">
