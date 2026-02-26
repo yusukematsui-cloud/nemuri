@@ -1,0 +1,135 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-bg: #FAFAF7;
+  --color-bg-warm: #F5F3EE;
+  --color-text-primary: #1A1A1A;
+  --color-text-secondary: #6B6B6B;
+  --color-text-muted: #9A9A9A;
+  --color-accent-blue: #2B4C7E;
+  --color-accent-warm: #C4956A;
+  --color-border-light: #E8E6E1;
+  --color-card-bg: #FFFFFF;
+  --color-tag-bg: #EEF2F7;
+  --color-tag-text: #2B4C7E;
+  --font-display: "Playfair Display", serif;
+  --font-body: "Inter", sans-serif;
+}
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text-primary);
+  font-family: var(--font-body);
+}
+
+/* microCMS Rich Editor Styles */
+.article-body h2 {
+  font-size: 22px;
+  font-weight: bold;
+  color: var(--color-text-primary);
+  margin-top: 48px;
+  margin-bottom: 12px;
+  padding-bottom: 12px;
+  border-bottom: 3px solid var(--color-accent-blue);
+  border-bottom-width: 3px;
+}
+
+.article-body h2:first-child {
+  margin-top: 0;
+}
+
+.article-body h3 {
+  font-size: 18px;
+  font-weight: bold;
+  color: var(--color-text-primary);
+  margin-top: 32px;
+  margin-bottom: 8px;
+}
+
+.article-body p {
+  font-size: 15px;
+  line-height: 2;
+  color: var(--color-text-primary);
+  margin-bottom: 24px;
+}
+
+.article-body ul, .article-body ol {
+  font-size: 15px;
+  line-height: 2;
+  color: var(--color-text-primary);
+  margin-bottom: 24px;
+  padding-left: 24px;
+}
+
+.article-body ul { list-style: disc; }
+.article-body ol { list-style: decimal; }
+
+.article-body li {
+  margin-bottom: 4px;
+}
+
+.article-body blockquote {
+  background: var(--color-bg-warm);
+  padding: 20px;
+  margin-bottom: 24px;
+  border-left: 3px solid var(--color-accent-warm);
+  border-radius: 4px;
+}
+
+.article-body blockquote p {
+  font-size: 14px;
+  font-style: italic;
+  color: var(--color-text-secondary);
+  margin-bottom: 0;
+}
+
+.article-body img {
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+  margin: 24px 0;
+}
+
+.article-body a {
+  color: var(--color-accent-blue);
+  text-decoration: underline;
+}
+
+.article-body a:hover {
+  opacity: 0.8;
+}
+
+.article-body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 24px;
+  font-size: 14px;
+}
+
+.article-body th, .article-body td {
+  border: 1px solid var(--color-border-light);
+  padding: 12px;
+  text-align: left;
+}
+
+.article-body th {
+  background: var(--color-bg-warm);
+  font-weight: 600;
+}
+
+.article-body pre {
+  background: #1A1A1A;
+  color: #E0E0E0;
+  padding: 20px;
+  border-radius: 4px;
+  overflow-x: auto;
+  margin-bottom: 24px;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.article-body hr {
+  border: none;
+  border-top: 1px solid var(--color-border-light);
+  margin: 32px 0;
+}
