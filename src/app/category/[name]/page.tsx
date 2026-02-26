@@ -1,7 +1,10 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { getArticles, getArticlesByCategory } from "@/lib/microcms";
 import { ArticleCard } from "@/components/shared/ArticleCard";
 import { AppCTA } from "@/components/shared/AppCTA";
+
+const BASE = "https://nemuri.vercel.app";
 
 const categoryMeta: Record<string, { label: string; description: string }> = {
   cause: {
@@ -43,6 +46,25 @@ export function generateStaticParams() {
   ];
 }
 
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ name: string }>;
+}): Promise<Metadata> {
+  const { name } = await params;
+  const meta = categoryMeta[name] || categoryMeta.all;
+  return {
+    title: `${meta.label}の記事一覧`,
+    description: meta.description,
+    openGraph: {
+      title: `${meta.label} | NEMURI`,
+      description: meta.description,
+      url: `${BASE}/category/${name}`,
+    },
+    alternates: { canonical: `/category/${name}` },
+  };
+}
+
 export default async function CategoryPage({
   params,
 }: {
@@ -58,22 +80,34 @@ export default async function CategoryPage({
 
   const articles = res.contents;
 
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      { "@type": "ListItem", position: 1, name: "ホーム", item: BASE },
+      { "@type": "ListItem", position: 2, name: meta.label },
+    ],
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
+
       {/* Breadcrumb */}
-      <div className="max-w-[1440px] mx-auto px-14 py-3">
-        <p className="text-xs text-text-muted">
-          <Link href="/" className="text-accent-blue hover:underline">
-            ホーム
-          </Link>
-          {" / "}
-          <span>{meta.label}</span>
-        </p>
-      </div>
+      <nav aria-label="パンくずリスト" className="max-w-[1440px] mx-auto px-4 md:px-14 py-3">
+        <ol className="flex items-center gap-1 text-xs text-text-muted">
+          <li><Link href="/" className="text-accent-blue hover:underline">ホーム</Link></li>
+          <li>/</li>
+          <li>{meta.label}</li>
+        </ol>
+      </nav>
 
       {/* Category Header */}
-      <div className="max-w-[1440px] mx-auto px-14 pb-8">
-        <h1 className="font-display text-[32px] font-bold text-text-primary tracking-[-0.5px] mb-3">
+      <div className="max-w-[1440px] mx-auto px-4 md:px-14 pb-8">
+        <h1 className="font-display text-2xl md:text-[32px] font-bold text-text-primary tracking-[-0.5px] mb-3">
           {meta.label}
         </h1>
         <p className="text-sm text-text-secondary leading-[1.8] max-w-[600px] mb-2">
@@ -87,9 +121,9 @@ export default async function CategoryPage({
       <div className="max-w-[1440px] mx-auto h-px bg-border-light" />
 
       {/* Article Grid */}
-      <section className="max-w-[1440px] mx-auto px-14 py-12">
+      <section className="max-w-[1440px] mx-auto px-4 md:px-14 py-12">
         {articles.length > 0 ? (
-          <div className="grid grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {articles.map((article) => (
               <ArticleCard key={article.id} article={article} />
             ))}
@@ -113,11 +147,11 @@ export default async function CategoryPage({
 
       {/* Category Navigation */}
       <div className="max-w-[1440px] mx-auto h-px bg-border-light" />
-      <section className="max-w-[1440px] mx-auto px-14 py-12">
+      <section className="max-w-[1440px] mx-auto px-4 md:px-14 py-12">
         <p className="text-xs font-semibold text-text-muted tracking-[0.5px] mb-5">
           他のカテゴリ
         </p>
-        <div className="flex gap-3">
+        <div className="flex flex-wrap gap-3">
           {Object.entries(categoryMeta)
             .filter(([key]) => key !== name && key !== "all")
             .map(([key, val]) => (

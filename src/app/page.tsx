@@ -57,8 +57,11 @@ export default async function HomePage() {
 
   return (
     <>
+      {/* H1 — visually present but compact */}
+      <h1 className="sr-only">NEMURI — いびき・睡眠改善の専門メディア</h1>
+
       {/* Hero */}
-      <section className="max-w-[1440px] mx-auto flex gap-10 px-14 py-12">
+      <section className="max-w-[1440px] mx-auto flex flex-col lg:flex-row gap-10 px-4 md:px-14 py-12">
         <div className="flex-1">
           <Link href={`/articles/${featured.id}`} className="group block">
             <div className="relative w-full aspect-[16/9] rounded-[4px] overflow-hidden mb-6">
@@ -81,12 +84,12 @@ export default async function HomePage() {
               {featured.description}
             </p>
             <p className="text-xs text-text-muted">
-              {formatDate(featured.publishedAt || featured.createdAt)} · 読了 {featured.readTime}
+              <time dateTime={featured.publishedAt || featured.createdAt}>{formatDate(featured.publishedAt || featured.createdAt)}</time> · 読了 {featured.readTime}
             </p>
           </Link>
         </div>
 
-        <div className="w-[380px] shrink-0 flex flex-col">
+        <div className="w-full lg:w-[380px] shrink-0 flex flex-col">
           {sideArticles.map((article, i) => (
             <Link
               key={article.id}
@@ -118,11 +121,11 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <div className="max-w-[1440px] mx-auto h-px bg-border-light" />
+      <div className="max-w-[1440px] mx-auto h-px bg-border-light mx-4 md:mx-auto" />
 
       {/* Latest Articles */}
       {latest.length > 0 && (
-        <section className="max-w-[1440px] mx-auto px-14 py-12">
+        <section className="max-w-[1440px] mx-auto px-4 md:px-14 py-12">
           <div className="flex items-baseline mb-8">
             <h2 className="font-display text-2xl font-bold text-text-primary">
               最新記事
@@ -138,25 +141,18 @@ export default async function HomePage() {
               すべて見る →
             </Link>
           </div>
-          <div className="grid grid-cols-3 gap-6 mb-6">
-            {latest.slice(0, 3).map((article) => (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {latest.map((article) => (
               <ArticleCard key={article.id} article={article} />
             ))}
           </div>
-          {latest.length > 3 && (
-            <div className="grid grid-cols-3 gap-6">
-              {latest.slice(3, 6).map((article) => (
-                <ArticleCard key={article.id} article={article} />
-              ))}
-            </div>
-          )}
         </section>
       )}
 
-      <div className="max-w-[1440px] mx-auto h-px bg-border-light" />
+      <div className="max-w-[1440px] mx-auto h-px bg-border-light mx-4 md:mx-auto" />
 
       {/* Category & Ranking */}
-      <section className="max-w-[1440px] mx-auto flex gap-12 px-14 py-12">
+      <section className="max-w-[1440px] mx-auto flex flex-col lg:flex-row gap-12 px-4 md:px-14 py-12">
         <div className="flex-1">
           <div className="flex items-baseline mb-7">
             <h2 className="font-display text-2xl font-bold text-text-primary">
@@ -166,7 +162,7 @@ export default async function HomePage() {
               — Categories
             </span>
           </div>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {categories.map((cat) => (
               <Link
                 key={cat.name}
@@ -185,7 +181,7 @@ export default async function HomePage() {
           </div>
         </div>
 
-        <div className="w-[380px] shrink-0">
+        <div className="w-full lg:w-[380px] shrink-0">
           <div className="flex items-baseline mb-6">
             <h2 className="font-display text-2xl font-bold text-text-primary">
               人気記事
@@ -218,12 +214,12 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <div className="max-w-[1440px] mx-auto h-px bg-border-light" />
+      <div className="max-w-[1440px] mx-auto h-px bg-border-light mx-4 md:mx-auto" />
 
       {/* Expert Column */}
       {columns.length > 0 && (
         <section className="bg-bg-warm">
-          <div className="max-w-[1440px] mx-auto px-14 py-12">
+          <div className="max-w-[1440px] mx-auto px-4 md:px-14 py-12">
             <div className="flex items-baseline mb-8">
               <h2 className="font-display text-2xl font-bold text-text-primary">
                 専門家コラム
@@ -239,7 +235,7 @@ export default async function HomePage() {
                 すべて見る →
               </Link>
             </div>
-            <div className="grid grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {columns.map((col) => (
                 <Link
                   key={col.id}

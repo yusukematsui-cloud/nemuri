@@ -11,19 +11,19 @@ const navItems = [
 export function Header() {
   return (
     <header className="sticky top-0 z-50 bg-card-bg border-b border-border-light">
-      <div className="max-w-[1440px] mx-auto flex items-center px-14 py-5">
+      <div className="max-w-[1440px] mx-auto flex items-center px-4 md:px-14 py-4 md:py-5">
         <Link href="/" className="flex items-baseline gap-2">
-          <span className="font-display text-[26px] font-bold tracking-[2px] text-text-primary">
+          <span className="font-display text-[22px] md:text-[26px] font-bold tracking-[2px] text-text-primary">
             NEMURI
           </span>
-          <span className="text-[11px] tracking-[1px] text-text-secondary">
+          <span className="text-[11px] tracking-[1px] text-text-secondary hidden sm:inline">
             ねむりのミカタ
           </span>
         </Link>
 
         <div className="flex-1" />
 
-        <nav className="flex items-center gap-8">
+        <nav className="hidden md:flex items-center gap-8">
           {navItems.map((item) => (
             <Link
               key={item.href}
@@ -35,11 +35,13 @@ export function Header() {
           ))}
         </nav>
 
-        <div className="w-px h-5 bg-border-light mx-6" />
-
-        <button className="text-[13px] font-medium text-accent-blue hover:opacity-80 transition-opacity">
-          検索
-        </button>
+        {/* Mobile: category link */}
+        <Link
+          href="/category/all"
+          className="md:hidden text-[13px] font-medium text-accent-blue"
+        >
+          記事一覧
+        </Link>
       </div>
     </header>
   );

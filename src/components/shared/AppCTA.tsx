@@ -11,8 +11,8 @@ export function AppCTA({
 }) {
   if (variant === "banner") {
     return (
-      <div className="bg-accent-blue flex items-center gap-8 px-14 py-8">
-        <div className="w-16 h-16 rounded-[14px] overflow-hidden shrink-0">
+      <div className="bg-accent-blue flex flex-col sm:flex-row items-center gap-4 sm:gap-8 px-4 md:px-14 py-6 sm:py-8">
+        <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-[14px] overflow-hidden shrink-0">
           <Image
             src="/ibiki-navi-icon.png"
             alt="いびきナビ"
@@ -21,7 +21,7 @@ export function AppCTA({
             className="w-full h-full object-cover"
           />
         </div>
-        <div className="flex-1">
+        <div className="flex-1 text-center sm:text-left">
           <p className="text-base font-semibold text-white">{headline}</p>
           <p className="text-[13px] text-white/80">{description}</p>
         </div>
@@ -33,8 +33,8 @@ export function AppCTA({
   }
 
   return (
-    <div className="bg-accent-blue flex items-center gap-12 px-20 py-14">
-      <div className="w-[100px] h-[100px] rounded-[22px] overflow-hidden shrink-0">
+    <div className="bg-accent-blue flex flex-col md:flex-row items-center gap-8 md:gap-12 px-4 md:px-20 py-10 md:py-14">
+      <div className="w-[80px] h-[80px] md:w-[100px] md:h-[100px] rounded-[22px] overflow-hidden shrink-0">
         <Image
           src="/ibiki-navi-icon.png"
           alt="いびきナビ"
@@ -43,11 +43,11 @@ export function AppCTA({
           className="w-full h-full object-cover"
         />
       </div>
-      <div className="flex-1">
+      <div className="flex-1 text-center md:text-left">
         <span className="inline-block px-2.5 py-0.5 rounded-full bg-white/10 text-[11px] font-semibold text-white/80 tracking-[0.5px] mb-3">
           公式アプリ
         </span>
-        <div className="flex items-baseline gap-3 mb-3">
+        <div className="flex items-baseline justify-center md:justify-start gap-3 mb-3">
           <h3 className="text-[28px] font-bold text-white">いびきナビ</h3>
           <span className="font-display text-base text-white/50 tracking-[2px]">
             IBIKI NAVI
@@ -56,7 +56,7 @@ export function AppCTA({
         <p className="text-sm text-white/80 leading-[1.8] mb-4">
           {description}
         </p>
-        <div className="flex gap-3">
+        <div className="flex flex-col sm:flex-row gap-3 justify-center md:justify-start">
           <button className="px-7 py-3 rounded-md bg-white text-[13px] font-semibold text-accent-blue hover:bg-white/90 transition-colors">
             App Store からダウンロード
           </button>
