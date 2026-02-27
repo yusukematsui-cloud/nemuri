@@ -157,7 +157,7 @@ export default async function ArticlePage({
   };
 
   // Extract FAQ items from h3 Q: patterns in body
-  const faqMatches = [...article.body.matchAll(/<h3[^>]*>Q[:：]\s*(.+?)<\/h3>\s*<p>(.+?)<\/p>/gs)];
+  const faqMatches = [...article.body.matchAll(/<h3[^>]*>Q[:：]\s*(.+?)<\/h3>\s*<p>(.+?)<\/p>/g)];
   const faqJsonLd = faqMatches.length > 0 ? {
     "@context": "https://schema.org",
     "@type": "FAQPage",
