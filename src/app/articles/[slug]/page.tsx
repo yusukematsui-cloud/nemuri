@@ -12,10 +12,11 @@ function ArticleBody({ body, articleId }: { body: string; articleId: string }) {
   const sections = body.split(/(?=<h2[\s>])/);
   const totalH2 = sections.length;
 
-  // Insert 3 images at ~1/4, ~1/2, and ~3/4 of sections
-  const img1After = Math.max(1, Math.floor(totalH2 / 4));
-  const img2After = Math.max(2, Math.floor(totalH2 / 2));
-  const img3After = Math.max(3, Math.floor((totalH2 * 3) / 4));
+  // Insert 6 images evenly distributed across sections
+  const imageCount = 6;
+  const imagePositions = Array.from({ length: imageCount }, (_, n) =>
+    Math.max(n + 1, Math.floor((totalH2 * (n + 1)) / (imageCount + 1)))
+  );
 
   const result: React.ReactNode[] = [];
 
@@ -28,37 +29,12 @@ function ArticleBody({ body, articleId }: { body: string; articleId: string }) {
       />
     );
 
-    if (i === img1After) {
+    const imgIndex = imagePositions.indexOf(i);
+    if (imgIndex !== -1) {
       result.push(
-        <figure key="img1" className="my-8">
+        <figure key={`img${imgIndex + 1}`} className="my-8">
           <Image
-            src={`/images/articles/${articleId}-1.png`}
-            alt=""
-            width={760}
-            height={428}
-            className="w-full rounded-[4px]"
-          />
-        </figure>
-      );
-    }
-    if (i === img2After) {
-      result.push(
-        <figure key="img2" className="my-8">
-          <Image
-            src={`/images/articles/${articleId}-2.png`}
-            alt=""
-            width={760}
-            height={428}
-            className="w-full rounded-[4px]"
-          />
-        </figure>
-      );
-    }
-    if (i === img3After) {
-      result.push(
-        <figure key="img3" className="my-8">
-          <Image
-            src={`/images/articles/${articleId}-3.png`}
+            src={`/images/articles/${articleId}-${imgIndex + 1}.png`}
             alt=""
             width={760}
             height={428}

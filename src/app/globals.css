@@ -134,6 +134,39 @@ body {
   margin: 32px 0;
 }
 
+.article-body sup {
+  font-size: 10px;
+  color: var(--color-accent-blue);
+  cursor: default;
+}
+
+.article-body .references {
+  margin-top: 48px;
+  padding-top: 24px;
+  border-top: 1px solid var(--color-border-light);
+}
+
+.article-body .references h3 {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  letter-spacing: 0.5px;
+  margin-top: 0;
+  margin-bottom: 12px;
+}
+
+.article-body .references p {
+  font-size: 11px;
+  line-height: 1.8;
+  color: var(--color-text-muted);
+  margin-bottom: 6px;
+}
+
+.article-body .references a {
+  font-size: 11px;
+  word-break: break-all;
+}
+
 /* Static page prose styles */
 .prose-nemuri p {
   font-size: 15px;
