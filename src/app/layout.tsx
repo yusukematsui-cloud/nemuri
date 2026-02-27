@@ -19,7 +19,7 @@ const inter = Inter({
 const SITE_NAME = "NEMURI — いびき・睡眠改善の専門メディア";
 const SITE_DESC =
   "エビデンスに基づいた信頼できるいびき・睡眠改善情報を、わかりやすくお届けします。";
-const BASE_URL = "https://nemuri.vercel.app";
+const BASE_URL = "https://nemuri-mikata.com";
 
 export const metadata: Metadata = {
   metadataBase: new URL(BASE_URL),

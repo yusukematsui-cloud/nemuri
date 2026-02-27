@@ -4,7 +4,7 @@ import { getArticles, getArticlesByCategory } from "@/lib/microcms";
 import { ArticleCard } from "@/components/shared/ArticleCard";
 import { AppCTA } from "@/components/shared/AppCTA";
 
-const BASE = "https://nemuri.vercel.app";
+const BASE = "https://nemuri-mikata.com";
 
 const categoryMeta: Record<string, { label: string; description: string }> = {
   cause: {

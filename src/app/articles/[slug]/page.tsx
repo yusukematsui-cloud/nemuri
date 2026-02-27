@@ -5,7 +5,7 @@ import { notFound } from "next/navigation";
 import { getArticleBySlug, getArticles, getArticleCategory, getArticleImage } from "@/lib/microcms";
 import { AppCTA } from "@/components/shared/AppCTA";
 
-const BASE = "https://nemuri.vercel.app";
+const BASE = "https://nemuri-mikata.com";
 
 function ArticleBody({ body, articleId }: { body: string; articleId: string }) {
   // Split body at <h2> boundaries to insert images between sections

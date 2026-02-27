@@ -1,7 +1,7 @@
 import type { MetadataRoute } from "next";
 import { getArticles } from "@/lib/microcms";
 
-const BASE = "https://nemuri.vercel.app";
+const BASE = "https://nemuri-mikata.com";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const res = await getArticles(100);
