@@ -7,10 +7,16 @@ import { AppCTA } from "@/components/shared/AppCTA";
 
 const BASE = "https://nemuri-mikata.com";
 
-function ArticleBody({ body, articleId }: { body: string; articleId: string }) {
+function ArticleBody({ body, articleId, articleTitle }: { body: string; articleId: string; articleTitle: string }) {
   // Split body at <h2> boundaries to insert images between sections
   const sections = body.split(/(?=<h2[\s>])/);
   const totalH2 = sections.length;
+
+  // Extract h2 headings for image alt text
+  const headings = sections.map((s) => {
+    const match = s.match(/<h2[^>]*>([^<]+)<\/h2>/);
+    return match ? match[1] : articleTitle;
+  });
 
   // Insert 6 images evenly distributed across sections
   const imageCount = 6;
@@ -35,7 +41,7 @@ function ArticleBody({ body, articleId }: { body: string; articleId: string }) {
         <figure key={`img${imgIndex + 1}`} className="my-8">
           <Image
             src={`/images/articles/${articleId}-${imgIndex + 1}.png`}
-            alt=""
+            alt={`${articleTitle} - ${headings[i] || "イメージ画像"}`}
             width={760}
             height={428}
             className="w-full rounded-[4px]"
@@ -150,6 +156,21 @@ export default async function ArticlePage({
     ],
   };
 
+  // Extract FAQ items from h3 Q: patterns in body
+  const faqMatches = [...article.body.matchAll(/<h3[^>]*>Q[:：]\s*(.+?)<\/h3>\s*<p>(.+?)<\/p>/gs)];
+  const faqJsonLd = faqMatches.length > 0 ? {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: faqMatches.map(([, q, a]) => ({
+      "@type": "Question",
+      name: q.replace(/<[^>]*>/g, "").trim(),
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: a.replace(/<[^>]*>/g, "").trim(),
+      },
+    })),
+  } : null;
+
   return (
     <>
       <script
@@ -160,6 +181,12 @@ export default async function ArticlePage({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
+      {faqJsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+        />
+      )}
 
       {/* Breadcrumb */}
       <nav aria-label="パンくずリスト" className="max-w-[1440px] mx-auto px-4 md:px-14 py-3">
@@ -219,7 +246,7 @@ export default async function ArticlePage({
           </p>
 
           {/* Rich Editor Content with inline images */}
-          <ArticleBody body={article.body} articleId={article.id} />
+          <ArticleBody body={article.body} articleId={article.id} articleTitle={article.title} />
         </div>
 
         {/* Sidebar */}

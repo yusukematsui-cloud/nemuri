@@ -1,7 +1,7 @@
 import Image from "next/image";
 
 const APP_STORE_URL =
-  "https://apps.apple.com/jp/app/%E3%81%84%E3%81%B3%E3%81%8D%E3%83%8A%E3%83%93/id675928665";
+  "https://apps.apple.com/jp/app/%E3%81%84%E3%81%B3%E3%81%8D%E3%83%8A%E3%83%93/id6759286653";
 
 export function AppCTA({
   headline = "質の高い睡眠を、あなたに。",
