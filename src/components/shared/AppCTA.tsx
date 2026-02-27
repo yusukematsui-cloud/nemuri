@@ -74,7 +74,7 @@ export function AppCTA({
           App Store からダウンロード
         </a>
         <p className="text-xs text-white/50 mt-3">
-          ★ 4.8 · 12,000+ レビュー · 無料（iOS対応）
+          無料（iOS対応）
         </p>
       </div>
     </div>
